@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -40,7 +41,7 @@ func main() {
 	}(inputChannel)
 
 	for {
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
 		select {
 		case pressedKey = <-inputChannel:
 			if pressedKey == 'q' {
@@ -49,7 +50,11 @@ func main() {
 			snake.SetDirection(pressedKey)
 		default:
 		}
-		snake.Move(&board, &food)
+		success := snake.Move(&board, &food)
+		if !success {
+			fmt.Printf("Game Over %v\n", snake.GetSnakeLength())
+			return
+		}
 		board.Rerender(&snake, &food)
 	}
 

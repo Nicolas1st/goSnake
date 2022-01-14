@@ -16,7 +16,7 @@ func CreateSnake(headSymbol string, bodySymbol string, x, y int, movement string
 	return Snake{headSymbol, bodySymbol, []snakeBlock{head}, movement}
 }
 
-func (snake *Snake) Move(board *Board, food *Food) {
+func (snake *Snake) Move(board *Board, food *Food) bool {
 
 	var oldHead = snake.blocks[len(snake.blocks)-1]
 	var x, y int = oldHead.x, oldHead.y
@@ -42,13 +42,15 @@ func (snake *Snake) Move(board *Board, food *Food) {
 
 	switch board.grid[x][y] {
 	case snake.bodySymbol:
-		// fail
+		return false
 	case board.emptyCellSymbol:
 		// removing the tail part
 		snake.blocks = snake.blocks[1:]
 	case food.Symbol:
 		food.setFreeCoordinates(board, snake)
 	}
+
+	return true
 
 }
 
@@ -57,6 +59,10 @@ func (snake *Snake) SetDirection(pressedKey rune) {
 	if ok && oppositeKeys[snake.direction] != direction {
 		snake.direction = direction
 	}
+}
+
+func (snake *Snake) GetSnakeLength() int {
+	return len(snake.blocks)
 }
 
 func (snake *Snake) renderOnBoard(board *Board) {
