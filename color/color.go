@@ -1,12 +1,15 @@
 package color
 
-var red = "\033[31m"
-var green = "\033[32m"
+var (
+	red                 = "\033[31m"
+	green               = "\033[32m"
+	endColoringSequence = "\033[0m"
+)
 
 func TextToGreen(text string) string {
-	return green + text + "\033[0m"
+	return green + text + endColoringSequence
 }
 
 func TextToRed(text string) string {
-	return red + text + "\033[0m"
+	return red + text + endColoringSequence
 }
