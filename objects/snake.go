@@ -16,6 +16,7 @@ func CreateSnake(headSymbol string, bodySymbol string, x, y int, movement string
 	return Snake{headSymbol, bodySymbol, []snakeBlock{head}, movement}
 }
 
+// Move returns true if the move made was valid, false otherwise
 func (snake *Snake) Move(board *Board, food *Food) bool {
 
 	var oldHead = snake.blocks[len(snake.blocks)-1]
