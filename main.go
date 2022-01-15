@@ -56,6 +56,7 @@ func main() {
 			return
 		}
 		board.Rerender(&snake, &food)
+		fmt.Printf("Score: %v\n", snake.GetSnakeLength())
 	}
 
 }
