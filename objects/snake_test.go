@@ -4,7 +4,7 @@ import "testing"
 
 func TestCreateSnake(t *testing.T) {
 
-	var createFoodTests = []struct {
+	var createSnakeTests = []struct {
 		headSymbol, bodySymbol string
 		x, y                   int
 		direction              string
@@ -16,7 +16,7 @@ func TestCreateSnake(t *testing.T) {
 		{"w", "l", 4, 5, "right", Snake{"w", "l", []snakeBlock{{4, 5}}, "right"}},
 	}
 
-	for _, test := range createFoodTests {
+	for _, test := range createSnakeTests {
 
 		output := CreateSnake(test.headSymbol, test.bodySymbol, test.x, test.y, test.direction)
 
