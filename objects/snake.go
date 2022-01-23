@@ -43,6 +43,8 @@ func (snake *Snake) Move(board *Board, food *Food) bool {
 
 	switch board.grid[x][y] {
 	case snake.bodySymbol:
+		// removing the tail part
+		snake.blocks = snake.blocks[1:]
 		return false
 	case board.emptyCellSymbol:
 		// simple movement
