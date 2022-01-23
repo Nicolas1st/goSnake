@@ -42,6 +42,22 @@ Simple snake game (My first ever GO project)
 ## Configuration
 
 ```go
+time.Sleep(100 * time.Millisecond)
+```
+The number specifies the time for each frame in the game,
+
+the smaller the number, the faster the game runs,
+
+see more [here](./main.go)
+
+```go
+const scoreToWin int = 100
+```
+Can be used to define the length of the snake to win the game, 
+
+see more [here](./main.go)
+
+```go
 var board objects.Board = objects.CreateBoard(20, 20, " ")
 var snake = objects.CreateSnake(color.TextToGreen("$"), color.TextToGreen("#"), 10, 10, "up")
 var food = objects.CreateFood(15, 15, color.TextToRed("@"))
