@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
+	"os/exec"
 	"time"
 
 	"github.com/Nicolas1st/goSnake/color"
@@ -50,13 +52,25 @@ func main() {
 			snake.SetDirection(pressedKey)
 		default:
 		}
-		success := snake.Move(&board, &food)
-		if !success {
-			fmt.Printf("Game Over %v\n", snake.GetSnakeLength())
+
+		// rendering a new frame, the old one should be cleared
+		clearScreen()
+
+		board.Render(&snake, &food)
+
+		snakeDidNotHitItself := snake.Move(&board, &food)
+		snakeLength := snake.GetSnakeLength()
+
+		if snakeLength == scoreToWin {
+			fmt.Printf(color.TextToGreen("You win! Your snake reached the lenght of %v\n"), snakeLength)
+			return
+		} else if snakeDidNotHitItself {
+			fmt.Printf(color.TextToYellow("Score: %v\n"), snakeLength)
+		} else {
+			fmt.Printf(color.TextToRed("Game Over %v\n"), snakeLength)
 			return
 		}
-		board.Rerender(&snake, &food)
-		fmt.Printf("Score: %v\n", snake.GetSnakeLength())
+
 	}
 
 }
