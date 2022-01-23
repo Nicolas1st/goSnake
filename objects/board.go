@@ -2,8 +2,6 @@ package objects
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
 )
 
 type Board struct {
@@ -41,23 +39,13 @@ func CreateBoard(height, width int, emtpyCellSymbol string) Board {
 	}
 }
 
-func (board *Board) Rerender(objects ...renderableOnBoard) {
+func (board *Board) Render(objects ...renderableOnBoard) {
 
 	// replacing the old board with a clean one
 	board.grid = createGrid(board.height, board.width, board.emptyCellSymbol)
 
 	for _, object := range objects {
 		object.renderOnBoard(board)
-	}
-
-	// clearing the terminal from the last displayed grid
-	command := exec.Command("clear")
-	command.Stdout = os.Stdout
-	err := command.Run()
-	if err != nil {
-		command = exec.Command("cls")
-		command.Stdout = os.Stdout
-		command.Run()
 	}
 
 	for _, row := range board.grid {
