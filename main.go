@@ -12,38 +12,66 @@ import (
 	"github.com/mattn/go-tty"
 )
 
-func main() {
+func clearScreen() {
 
-	var board objects.Board = objects.CreateBoard(20, 20, " ")
-	var snake = objects.CreateSnake(color.TextToGreen("$"), color.TextToGreen("#"), 10, 10, "up")
-	var food = objects.CreateFood(15, 15, color.TextToRed("@"))
+	command := exec.Command("clear")
+	command.Stdout = os.Stdout
 
-	inputChannel := make(chan rune)
+	err := command.Run()
+	if err != nil {
+		command = exec.Command("cls")
+		command.Stdout = os.Stdout
+		command.Run()
+	}
 
-	var pressedKey rune
-	go func(channel chan rune) {
-		tty, err := tty.Open()
+}
+
+func readUserInput(tty *tty.TTY, inputChannel chan rune) {
+
+	for {
+
+		pressedKey, err := tty.ReadRune()
 
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		for {
-			pressedKey, err := tty.ReadRune()
-			if pressedKey == 'q' {
-				tty.Close()
-			}
+		inputChannel <- pressedKey
 
-			if err != nil {
-				log.Fatal(err)
-			}
+	}
 
-			channel <- pressedKey
-		}
-	}(inputChannel)
+}
 
+func main() {
+
+	const scoreToWin int = 100
+
+	// initializing objects
+	var board objects.Board = objects.CreateBoard(20, 20, " ")
+	var snake = objects.CreateSnake(color.TextToGreen("$"), color.TextToGreen("#"), 10, 10, "up")
+	var food = objects.CreateFood(15, 15, color.TextToRed("@"))
+
+	// opening a tty to read input from
+	tty, err := tty.Open()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer tty.Close()
+
+	// running a go routine to get user input
+	inputChannel := make(chan rune)
+	var pressedKey rune
+	go readUserInput(tty, inputChannel)
+
+	// game loop
 	for {
+
+		// time between game frames
 		time.Sleep(100 * time.Millisecond)
+
+		// getting user input if it there was any
 		select {
 		case pressedKey = <-inputChannel:
 			if pressedKey == 'q' {
