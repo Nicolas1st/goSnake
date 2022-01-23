@@ -84,10 +84,10 @@ func main() {
 		// rendering a new frame, the old one should be cleared
 		clearScreen()
 
-		board.Render(&snake, &food)
-
 		snakeDidNotHitItself := snake.Move(&board, &food)
 		snakeLength := snake.GetSnakeLength()
+
+		board.Render(&snake, &food)
 
 		if snakeLength == scoreToWin {
 			fmt.Printf(color.TextToGreen("You win! Your snake reached the lenght of %v\n"), snakeLength)
