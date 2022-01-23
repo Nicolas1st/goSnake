@@ -39,3 +39,10 @@ func TestTextToRed(t *testing.T) {
 	testColoring(t, redColor, TextToRed)
 
 }
+
+func TestTextToYellow(t *testing.T) {
+
+	yellowColor := "\033[33m"
+	testColoring(t, yellowColor, TextToYellow)
+
+}
