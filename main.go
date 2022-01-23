@@ -48,7 +48,7 @@ func main() {
 
 	// initializing objects
 	var board objects.Board = objects.CreateBoard(20, 20, " ")
-	var snake = objects.CreateSnake(color.TextToGreen("$"), color.TextToGreen("#"), 10, 10, "up")
+	var snake = objects.CreateSnake(color.TextToYellow("$"), color.TextToGreen("#"), 10, 10, "up")
 	var food = objects.CreateFood(15, 15, color.TextToRed("@"))
 
 	// opening a tty to read input from
