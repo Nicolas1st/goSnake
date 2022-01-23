@@ -73,14 +73,13 @@ func (snake *Snake) GetSnakeLength() int {
 
 func (snake *Snake) renderOnBoard(board *Board) {
 
-	// displaying the head
-	var head snakeBlock = snake.blocks[len(snake.blocks)-1]
-
-	board.grid[head.x][head.y] = snake.headSymbol
-
 	// disaplaying the rest of the body
 	for _, block := range snake.blocks[:len(snake.blocks)-1] {
 		board.grid[block.x][block.y] = snake.bodySymbol
 	}
+
+	// displaying the head
+	var head snakeBlock = snake.blocks[len(snake.blocks)-1]
+	board.grid[head.x][head.y] = snake.headSymbol
 
 }
