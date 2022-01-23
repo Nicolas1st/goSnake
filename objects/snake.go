@@ -45,9 +45,14 @@ func (snake *Snake) Move(board *Board, food *Food) bool {
 	case snake.bodySymbol:
 		return false
 	case board.emptyCellSymbol:
+		// simple movement
 		// removing the tail part
+		// the head was already added
 		snake.blocks = snake.blocks[1:]
 	case food.Symbol:
+		// the tail part is not removed because
+		// eating food increases snake's length
+		// (head was already added, so it's +1 already)
 		food.setFreeCoordinates(board, snake)
 	}
 
