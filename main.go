@@ -90,12 +90,12 @@ func main() {
 		board.Render(&snake, &food)
 
 		if snakeLength == scoreToWin {
-			fmt.Printf(color.TextToGreen("You win! Your snake reached the length of %v\n"), snakeLength)
+			fmt.Printf(color.TextToGreen("You win! Your snake reached the length of %v\n"), scoreToWin)
 			return
 		} else if snakeDidNotHitItself {
 			fmt.Printf(color.TextToYellow("Score: %v\n"), snakeLength)
 		} else {
-			fmt.Printf(color.TextToRed("Game Over %v\n"), snakeLength)
+			fmt.Printf(color.TextToRed("Game Over. Score: %v\n"), snakeLength)
 			return
 		}
 
