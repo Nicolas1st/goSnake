@@ -5,42 +5,13 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"os/signal"
 	"time"
 
 	"github.com/Nicolas1st/goSnake/color"
 	"github.com/Nicolas1st/goSnake/objects"
 	"github.com/mattn/go-tty"
 )
-
-func clearScreen() {
-
-	command := exec.Command("clear")
-	command.Stdout = os.Stdout
-
-	err := command.Run()
-	if err != nil {
-		command = exec.Command("cls")
-		command.Stdout = os.Stdout
-		command.Run()
-	}
-
-}
-
-func readUserInput(tty *tty.TTY, inputChannel chan rune) {
-
-	for {
-
-		pressedKey, err := tty.ReadRune()
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		inputChannel <- pressedKey
-
-	}
-
-}
 
 func main() {
 
@@ -52,18 +23,43 @@ func main() {
 	var food = objects.CreateFood(15, 15, color.TextToRed("@"))
 
 	// opening a tty to read input from
-	tty, err := tty.Open()
+	t, err := tty.Open()
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	defer tty.Close()
+	defer t.Close()
 
 	// running a go routine to get user input
 	inputChannel := make(chan rune)
 	var pressedKey rune
-	go readUserInput(tty, inputChannel)
+	go func(tty *tty.TTY, inputChannel chan rune) {
+
+		for {
+
+			pressedKey, err := tty.ReadRune()
+
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			inputChannel <- pressedKey
+
+		}
+
+	}(t, inputChannel)
+
+	// making sure the tty is realeased even if forceful quit occurs
+	go func(tty *tty.TTY, inputChannel chan rune) {
+
+		signalChannel := make(chan os.Signal)
+		signal.Notify(signalChannel, os.Interrupt)
+
+		<-signalChannel
+		inputChannel <- 'q'
+
+	}(t, inputChannel)
 
 	// game loop
 	for {
@@ -81,14 +77,24 @@ func main() {
 		default:
 		}
 
-		// rendering a new frame, the old one should be cleared
-		clearScreen()
+		// clearing the old frame
+		command := exec.Command("clear")
+		command.Stdout = os.Stdout
 
+		err := command.Run()
+		if err != nil {
+			command = exec.Command("cls")
+			command.Stdout = os.Stdout
+			command.Run()
+		}
+
+		// updating the objects before displaying the new board
 		snakeDidNotHitItself := snake.Move(&board, &food)
 		snakeLength := snake.GetSnakeLength()
 
 		board.Render(&snake, &food)
 
+		// in-game messages
 		if snakeLength == scoreToWin {
 			fmt.Printf(color.TextToGreen("You win! Your snake reached the length of %v\n"), scoreToWin)
 			return
