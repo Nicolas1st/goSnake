@@ -39,13 +39,19 @@ func (snake *Snake) Move(board *Board, food *Food) bool {
 
 	var newHead snakeBlock = snakeBlock{x: x, y: y}
 
+	// adding new head
 	snake.blocks = append(snake.blocks, newHead)
 
 	switch board.grid[x][y] {
 	case snake.bodySymbol:
+		tail := snake.blocks[0]
 		// removing the tail part
 		snake.blocks = snake.blocks[1:]
-		return false
+		// if it's the tail, then it won't be there on the next iteration
+		// so it's not a collision
+		if !(tail.x == x && tail.y == y) {
+			return false
+		}
 	case board.emptyCellSymbol:
 		// simple movement
 		// removing the tail part
