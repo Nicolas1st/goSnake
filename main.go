@@ -51,7 +51,7 @@ func main() {
 	}(t, inputChannel)
 
 	// making sure the tty is realeased even if forceful quit occurs
-	go func(tty *tty.TTY, inputChannel chan rune) {
+	go func(inputChannel chan rune) {
 
 		signalChannel := make(chan os.Signal)
 		signal.Notify(signalChannel, os.Interrupt)
@@ -59,7 +59,7 @@ func main() {
 		<-signalChannel
 		inputChannel <- 'q'
 
-	}(t, inputChannel)
+	}(inputChannel)
 
 	// game loop
 	for {
