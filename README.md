@@ -1,8 +1,10 @@
-# Snake Game In GO
+# Snake Game In Go
 
-Simple snake game (My first ever GO project)
+## My First Ever Go Project
 
-- [Snake Game In GO](#snake-game-in-go)
+<img src="./goSnakeGameplay.gif" width="500" height="500"/>
+
+## Contents
   - [Structure](#structure)
   - [Configuration](#configuration)
   - [Installation And Running](#installation-and-running)
