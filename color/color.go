@@ -1,20 +1,14 @@
 package color
 
-var (
-	red                 = "\033[31m"
-	green               = "\033[32m"
-	yellow              = "\033[33m"
-	endColoringSequence = "\033[0m"
+type Color string
+
+const (
+	Red                 Color = "\033[31m"
+	Green               Color = "\033[32m"
+	Yellow              Color = "\033[33m"
+	endColoringSequence Color = "\033[0m"
 )
 
-func TextToGreen(text string) string {
-	return green + text + endColoringSequence
-}
-
-func TextToRed(text string) string {
-	return red + text + endColoringSequence
-}
-
-func TextToYellow(text string) string {
-	return yellow + text + endColoringSequence
+func TextToColor(text string, color Color) string {
+	return string(color) + text + string(endColoringSequence)
 }
