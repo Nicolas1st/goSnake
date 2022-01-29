@@ -9,6 +9,12 @@ const (
 	endColoringSequence Color = "\033[0m"
 )
 
-func TextToColor(text string, color Color) string {
-	return string(color) + text + string(endColoringSequence)
+var nameToColor = map[string]Color{
+	"red":    Red,
+	"green":  Green,
+	"yellow": Yellow,
+}
+
+func TextToColor(text string, colorName string) string {
+	return string(nameToColor[colorName]) + text + string(endColoringSequence)
 }
