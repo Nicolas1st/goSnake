@@ -14,32 +14,27 @@ func CreateFood(x, y int, foodSymbol string) Food {
 }
 
 // uses the board.grid from the previous iteration
-func (food *Food) setFreeCoordinates(board *Board, snake *Snake) {
+func (food *Food) setFreeCoordinates(board *Board) {
 
-	var x, y int
-	var snakeHead snakeBlock = snake.blocks[len(snake.blocks)-1]
+	var newX, newY int
 
-	// if the field fills up it might result in the infinte loop
-	// figure out how to deal with it
 	for {
 
-		// should not appear at the position of head
-		// not checking the tail position because the food
-		// is being generated only when the old one has been eaten
-		// since that block is occupied
-		if x == snakeHead.x && y == snakeHead.y {
+		// should not appear at the same place,
+		// because snake's head is located there
+		if newX == food.x && newY == food.y {
 			continue
 		}
 
-		x, y = rand.Intn(board.width), rand.Intn(board.height)
+		newX, newY = rand.Intn(board.width), rand.Intn(board.height)
 
-		if board.grid[x][y] == board.emptyCellSymbol {
+		if board.grid[newX][newY] == board.emptyCellSymbol {
+			food.x = newX
+			food.y = newY
 			break
 		}
-	}
 
-	food.x = x
-	food.y = y
+	}
 
 }
 

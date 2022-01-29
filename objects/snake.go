@@ -61,7 +61,7 @@ func (snake *Snake) Move(board *Board, food *Food) bool {
 		// the tail part is not removed because
 		// eating food increases snake's length
 		// (head was already added, so it's +1 already)
-		food.setFreeCoordinates(board, snake)
+		food.setFreeCoordinates(board)
 	}
 
 	return true
