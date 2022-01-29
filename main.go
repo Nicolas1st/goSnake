@@ -19,8 +19,8 @@ func main() {
 
 	// initializing objects
 	var board objects.Board = objects.CreateBoard(20, 20, " ")
-	var snake = objects.CreateSnake(color.TextToYellow("$"), color.TextToGreen("#"), 10, 10, "up")
-	var food = objects.CreateFood(15, 15, color.TextToRed("@"))
+	var snake = objects.CreateSnake(color.TextToColor("$", "yellow"), color.TextToColor("#", "green"), 10, 10, "up")
+	var food = objects.CreateFood(15, 15, color.TextToColor("@", "red"))
 
 	// opening a tty to read input from
 	t, err := tty.Open()
@@ -96,12 +96,12 @@ func main() {
 
 		// in-game messages
 		if snakeLength == scoreToWin {
-			fmt.Printf(color.TextToGreen("You win! Your snake reached the length of %v\n"), scoreToWin)
+			fmt.Printf(color.TextToColor("You win! Your snake reached the length of %v\n", "green"), scoreToWin)
 			return
 		} else if snakeDidNotHitItself {
-			fmt.Printf(color.TextToYellow("Score: %v\n"), snakeLength)
+			fmt.Printf(color.TextToColor("Score: %v\n", "yellow"), snakeLength)
 		} else {
-			fmt.Printf(color.TextToRed("Game Over. Score: %v\n"), snakeLength)
+			fmt.Printf(color.TextToColor("Game Over. Score: %v\n", "red"), snakeLength)
 			return
 		}
 
