@@ -2,13 +2,14 @@ package color
 
 import "testing"
 
-func testColoring(t *testing.T, color string, f func(string) string) {
+func testColoring(t *testing.T, color Color, f func(string, Color) string) {
 
-	createExpectedOutput := func(text, color string) string {
-
+	// a copy of the function being tested,
+	// if the exported function changes,
+	// it will be known
+	createExpectedOutput := func(text string, color Color) string {
 		endColoringSequence := "\033[0m"
-		return color + text + endColoringSequence
-
+		return string(color) + text + string(endColoringSequence)
 	}
 
 	tests := []struct{ input, expected string }{
@@ -18,7 +19,7 @@ func testColoring(t *testing.T, color string, f func(string) string) {
 	}
 
 	for _, test := range tests {
-		output := f(test.input)
+		output := f(test.input, color)
 		if output != test.expected {
 			t.Errorf("Expected %q, received %q", test.expected, output)
 		}
@@ -26,23 +27,16 @@ func testColoring(t *testing.T, color string, f func(string) string) {
 
 }
 
-func TestTextToGreen(t *testing.T) {
+func TestTextToColor(t *testing.T) {
 
-	greenColor := "\033[32m"
-	testColoring(t, greenColor, TextToGreen)
+	colors := []Color{
+		Green,
+		Red,
+		Yellow,
+	}
 
-}
-
-func TestTextToRed(t *testing.T) {
-
-	redColor := "\033[31m"
-	testColoring(t, redColor, TextToRed)
-
-}
-
-func TestTextToYellow(t *testing.T) {
-
-	yellowColor := "\033[33m"
-	testColoring(t, yellowColor, TextToYellow)
+	for _, color := range colors {
+		testColoring(t, color, TextToColor)
+	}
 
 }
