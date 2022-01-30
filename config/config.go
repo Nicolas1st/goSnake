@@ -8,7 +8,8 @@ import (
 )
 
 type Config struct {
-	ScoreToWin int `toml:"ScoreToWin"`
+	ScoreToWin       int `toml:"ScoreToWin"`
+	TimePerFrameInMs int
 
 	Board *BoardConfig `toml:"board"`
 	Snake *SnakeConfig `toml:"snake"`

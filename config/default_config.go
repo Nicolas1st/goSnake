@@ -1,7 +1,8 @@
 package config
 
 var DefaultConfig Config = Config{
-	ScoreToWin: 30,
+	ScoreToWin:       30,
+	TimePerFrameInMs: 100,
 
 	Board: &BoardConfig{
 		Height:          20,

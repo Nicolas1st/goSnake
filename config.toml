@@ -1,4 +1,5 @@
 ScoreToWin = 40
+TimePerFrameInMs = 100
 
 [board]
 
