@@ -9,18 +9,46 @@ import (
 	"time"
 
 	"github.com/Nicolas1st/goSnake/color"
+	"github.com/Nicolas1st/goSnake/config"
 	"github.com/Nicolas1st/goSnake/objects"
 	"github.com/mattn/go-tty"
 )
 
 func main() {
 
-	const scoreToWin int = 100
+	// reading the config
+	configName, _ := os.LookupEnv("gosnake_config_file")
+	config := config.NewConfig(configName)
 
 	// initializing objects
-	var board objects.Board = objects.CreateBoard(20, 20, " ")
-	var snake = objects.CreateSnake(color.TextToColor("$", "yellow"), color.TextToColor("#", "green"), 10, 10, "up")
-	var food = objects.CreateFood(15, 15, color.TextToColor("@", "red"))
+	var board objects.Board = objects.CreateBoard(
+		config.Board.Height,
+		config.Board.Width,
+		config.Board.EmptyTileSymbol,
+	)
+
+	var snake = objects.CreateSnake(
+		color.TextToColor(
+			config.Snake.HeadSymbol,
+			config.Snake.HeadColor,
+		),
+		color.TextToColor(
+			config.Snake.BodySymbol,
+			config.Snake.BodyColor,
+		),
+		config.Snake.X,
+		config.Snake.Y,
+		config.Snake.MovementDirection,
+	)
+
+	var food = objects.CreateFood(
+		config.Food.X,
+		config.Food.Y,
+		color.TextToColor(
+			config.Food.Symbol,
+			config.Food.Color,
+		),
+	)
 
 	// opening a tty to read input from
 	t, err := tty.Open()
@@ -95,8 +123,8 @@ func main() {
 		board.Render(&snake, &food)
 
 		// in-game messages
-		if snakeLength == scoreToWin {
-			fmt.Printf(color.TextToColor("You win! Your snake reached the length of %v\n", "green"), scoreToWin)
+		if snakeLength == config.ScoreToWin {
+			fmt.Printf(color.TextToColor("You win! Your snake reached the length of %v\n", "green"), config.ScoreToWin)
 			return
 		} else if snakeDidNotHitItself {
 			fmt.Printf(color.TextToColor("Score: %v\n", "yellow"), snakeLength)
