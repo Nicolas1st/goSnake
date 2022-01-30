@@ -1,8 +1,6 @@
 package objects
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type Board struct {
 	height, width   int
