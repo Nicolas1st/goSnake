@@ -6,26 +6,27 @@
 
 ## Contents
   - [Structure](#structure)
-  - [Configuration](#configuration)
   - [Installation And Running](#installation-and-running)
+  - [Controls](#controls)
+  - [Configuration](#configuration)
 
 ## Structure
 
-- main.go
+- [main.go](./main.go)
 
   Entry point of the game
 
-- objects
+- [objects](./objects)
 
   All of the game objects + corresponding test files
 
-  - board.go
+  - [board.go](./objects/board.go)
 
     contains the object that renders all other objects (snake.go and food.go)
 
     that have the method `renderOnBoard`
 
-  - keymap
+  - [keymap.go](./objects/keymap.go)
     
     contains hashmaps
 
@@ -33,45 +34,79 @@
 
       pressed keys to snake movements on the board
 
-    - oppsiteKeys
+    - oppositeKeys
 
       opposite snake directions
 
-- color
+- [config](./config)
+
+  Config objects and a toml config parsing function
+
+- [color](./color)
 
   Helper package for adding color to the terminal + tests
+
+## Installation And Running
+
+- Make sure you have the version of Go specified in [go.mod](./go.mod)
+
+- Clone the repository:
+
+```sh
+git clone github.com/Nicolas1st/goSnake
+```
+
+- Download the dependencies:
+
+```sh
+go mod download
+```
+
+- Go to the directory (folder) that contains the project's
+
+  files and run the following command in the terminal:
+
+```sh
+go run main.go
+```
+
+## Controls
+
+- To control the snake use 'w', 'a', 's', 'd' keys
+
+  to go up, left, down, and right
+
+  The movement keys can be changed [here](#configuration)
+
+  To quit the game press 'q'
     
 ## Configuration
 
-```go
-time.Sleep(100 * time.Millisecond)
+The [config.toml](./config.toml) can be used.
+
+Set the environment variable to the config file name,
+
+other configs can be used as well.
+
+On Linux:
+
+```sh
+export gosnake_config_file=config.toml
 ```
-The number specifies the time for each frame in the game,
 
-the smaller the number, the faster the game runs,
+On Windows:
 
-see more [here](./main.go)
-
-```go
-const scoreToWin int = 100
+```cmd
+set gosnake_config_file=config.toml
 ```
-Can be used to define the length of the snake to win the game, 
 
-see more [here](./main.go)
+Then run:
 
-```go
-var board objects.Board = objects.CreateBoard(20, 20, " ")
-var snake = objects.CreateSnake(color.TextToGreen("$"), color.TextToGreen("#"), 10, 10, "up")
-var food = objects.CreateFood(15, 15, color.TextToRed("@"))
+```sh
+go run main.go
 ```
-The single character values define what characters will be used
 
-to display corresponding objects, values define
-
-board size or snake initial position,
-
-see more [here](./main.go)
-
+To change controls, edit the [keymap.go](./objects/keymap.go):
 ```go
 var keyMap = map[rune]string{
 	'w': "up",
@@ -80,20 +115,3 @@ var keyMap = map[rune]string{
 	'd': "right",
 }
 ```
-Can be configured [here](./objects/keymap.go)
-
-## Installation And Running
-
-- Make sure you have the version of GO specified in [go.mod](./go.mod)
-
-- Go to the directory (folder) that contains projects files and run the following command in the terminal
-
-```shell
-go run main.go
-```
-
-- To control the snake use 'w', 'a', 's', 'd' keys,
-
-  keys can be recongifured as shown [here](#configuration)
-
-- To quit the game press 'q'

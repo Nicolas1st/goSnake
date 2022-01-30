@@ -93,7 +93,7 @@ func main() {
 	for {
 
 		// time between game frames
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(time.Duration(config.TimePerFrameInMs) * time.Millisecond)
 
 		// getting user input if it there was any
 		select {
