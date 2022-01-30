@@ -1,0 +1,28 @@
+ScoreToWin = 40
+
+[board]
+
+EmptyTileSymbol = " "
+Height = 20
+Width = 20
+
+[snake]
+
+BodyColor = "green"
+BodySymbol = "#"
+
+HeadColor = "yellow"
+HeadSymbol = "$"
+
+X = 10
+Y = 10
+
+MovementDirection = "right"
+
+[food]
+
+Color = "red"
+Symbol = "@"
+
+X = 15
+Y = 15
