@@ -53,7 +53,7 @@ func main() {
 	// making sure the tty is realeased even if forceful quit occurs
 	go func(inputChannel chan rune) {
 
-		signalChannel := make(chan os.Signal)
+		signalChannel := make(chan os.Signal, 1)
 		signal.Notify(signalChannel, os.Interrupt)
 
 		<-signalChannel
