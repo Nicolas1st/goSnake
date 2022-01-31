@@ -70,7 +70,7 @@ func (snake *Snake) Move(board *Board, food *Food) bool {
 
 func (snake *Snake) SetDirection(pressedKey rune) {
 	direction, ok := keyMap[pressedKey]
-	if ok && oppositeKeys[snake.direction] != direction {
+	if ok && oppositeDirections[snake.direction] != direction {
 		snake.direction = direction
 	}
 }

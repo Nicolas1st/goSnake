@@ -7,7 +7,7 @@ var keyMap = map[rune]string{
 	'd': "right",
 }
 
-var oppositeKeys = map[string]string{
+var oppositeDirections = map[string]string{
 	"up":    "down",
 	"down":  "up",
 	"left":  "right",
