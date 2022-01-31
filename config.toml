@@ -1,11 +1,11 @@
 ScoreToWin = 40
-TimePerFrameInMs = 100
+TimePerFrameInMs = 300
 
 [board]
 
 EmptyTileSymbol = " "
-Height = 20
-Width = 20
+Height = 30
+Width = 30
 
 [snake]
 
@@ -27,3 +27,12 @@ Symbol = "@"
 
 X = 15
 Y = 15
+
+[keyboard]
+
+Up = "w"
+Left = "a"
+Down = "s"
+Right = "d"
+
+Quit = "q"
