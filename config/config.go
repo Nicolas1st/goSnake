@@ -14,6 +14,8 @@ type Config struct {
 	Board *BoardConfig `toml:"board"`
 	Snake *SnakeConfig `toml:"snake"`
 	Food  *FoodConfig  `toml:"food"`
+
+	KeyMap map[rune]string
 }
 
 // NewConfig - parses the user-provided config file
@@ -21,16 +23,33 @@ type Config struct {
 func NewConfig(filePath string) *Config {
 
 	b, err := ioutil.ReadFile(filePath)
+
+	// check file exists
 	if err != nil {
 		return &defaultConfig
 	}
 
+	// parsing main part of the config
 	config := &Config{}
 	_, err = toml.Decode(string(b), config)
+
 	if err != nil {
 		log.Fatal("Could not parse the config file")
 		return &defaultConfig
 	}
+
+	// parsing key mappings
+	keyboardKeys := &KeyboardKeys{}
+	_, err = toml.Decode(string(b), keyboardKeys)
+
+	if err != nil {
+		log.Fatal("Could not parse the config file")
+		return &defaultConfig
+	}
+
+	// contstructing final config
+	keyMap := keyboardKeys.toMap()
+	config.KeyMap = keyMap
 
 	return config
 
