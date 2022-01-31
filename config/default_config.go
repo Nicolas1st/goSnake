@@ -31,6 +31,15 @@ var defaultConfig Config = Config{
 		Y: 15,
 	},
 
+	ActionToKeyMap: &Keyboard{
+		Up:    'w',
+		Left:  'a',
+		Down:  's',
+		Right: 'd',
+
+		Quit: 'q',
+	},
+
 	KeyToActionMap: map[rune]string{
 		'w': "up",
 		'a': "left",

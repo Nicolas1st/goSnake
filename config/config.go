@@ -15,6 +15,7 @@ type Config struct {
 	Snake *SnakeConfig `toml:"snake"`
 	Food  *FoodConfig  `toml:"food"`
 
+	ActionToKeyMap *Keyboard `toml:"keyboard"`
 	KeyToActionMap map[rune]string
 }
 
@@ -29,7 +30,7 @@ func NewConfig(filePath string) *Config {
 		return &defaultConfig
 	}
 
-	// parsing main part of the config
+	// parsing the config
 	config := &Config{}
 	_, err = toml.Decode(string(b), config)
 
@@ -38,17 +39,8 @@ func NewConfig(filePath string) *Config {
 		return &defaultConfig
 	}
 
-	// parsing key mappings
-	keyboardKeys := &KeyboardKeys{}
-	_, err = toml.Decode(string(b), keyboardKeys)
-
-	if err != nil {
-		log.Fatal("Could not parse the config file")
-		return &defaultConfig
-	}
-
 	// contstructing final config
-	keyToActionMap := keyboardKeys.toMap()
+	keyToActionMap := config.ActionToKeyMap.toSwappedKeysAndValuesMap()
 	config.KeyToActionMap = keyToActionMap
 
 	return config
