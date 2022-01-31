@@ -22,14 +22,14 @@ func NewConfig(filePath string) *Config {
 
 	b, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		return &DefaultConfig
+		return &defaultConfig
 	}
 
 	config := &Config{}
 	_, err = toml.Decode(string(b), config)
 	if err != nil {
 		log.Fatal("Could not parse the config file")
-		return &DefaultConfig
+		return &defaultConfig
 	}
 
 	return config

@@ -1,6 +1,6 @@
 package config
 
-var DefaultConfig Config = Config{
+var defaultConfig Config = Config{
 	ScoreToWin:       30,
 	TimePerFrameInMs: 100,
 
