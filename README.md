@@ -2,7 +2,8 @@
 
 ## My First Ever Go Project
 
-<img src="./goSnakeGameplay.gif" width="500" height="500"/>
+<img src="./goSnakeGameplay.gif" alt="gif with gameplay" width="500" height="500" />
+
 
 ## Contents
   - [Structure](#structure)
@@ -18,25 +19,7 @@
 
 - [objects](./objects)
 
-  All of the game objects + corresponding test files
-
-  - [board.go](./objects/board.go)
-
-    contains the object that renders all other objects (snake.go and food.go)
-
-    that have the method `renderOnBoard`
-
-  - [keymap.go](./objects/keymap.go)
-    
-    contains hashmaps
-
-    - keyMap
-
-      pressed keys to snake movements on the board
-
-    - oppositeKeys
-
-      opposite snake directions
+  <strong>board</strong>, <strong>snake</strong>, <strong>food</strong> game objects
 
 - [config](./config)
 
@@ -44,27 +27,29 @@
 
 - [color](./color)
 
-  Helper package for adding color to the terminal + tests
+  Helper package for adding color to the terminal
+
+- [routines](./routines)
+
+  Goroutines to capture user input and system calls
 
 ## Installation And Running
 
-- Make sure you have the version of Go specified in [go.mod](./go.mod)
+1) Install the Go language with version found in [go.mod](./go.mod)
 
-- Clone the repository:
+2) Clone the repository:
 
 ```sh
 git clone github.com/Nicolas1st/goSnake
 ```
 
-- Download the dependencies:
+3) Download the dependencies:
 
 ```sh
 go mod download
 ```
 
-- Go to the directory (folder) that contains the project's
-
-  files and run the following command in the terminal:
+4) Go to the repository directory and run:
 
 ```sh
 go run main.go
@@ -72,21 +57,25 @@ go run main.go
 
 ## Controls
 
-- To control the snake use 'w', 'a', 's', 'd' keys
+-  Movement
 
-  to go up, left, down, and right
+    <strong>w</strong> - up
 
-  The movement keys can be changed [here](#configuration)
+    <strong>a</strong> - left
 
-  To quit the game press 'q'
+    <strong>s</strong> - down
+
+    <strong>d</strong> - right
+
+-  To quit press <strong>q</strong>
     
 ## Configuration
 
-The [config.toml](./config.toml) can be used.
+1) Edit [config.toml](./config.toml)
 
-Set the environment variable to the config file name,
+2) Set the environment variable to the name of the file above,
 
-other configs can be used as well.
+   using the following command:
 
 On Linux:
 
@@ -100,18 +89,8 @@ On Windows:
 set gosnake_config_file=config.toml
 ```
 
-Then run:
+3) Run the game:
 
 ```sh
 go run main.go
-```
-
-To change controls, edit the [keymap.go](./objects/keymap.go):
-```go
-var keyMap = map[rune]string{
-	'w': "up",
-	'a': "left",
-	's': "down",
-	'd': "right",
-}
 ```
