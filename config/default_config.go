@@ -31,7 +31,7 @@ var defaultConfig Config = Config{
 		Y: 15,
 	},
 
-	KeyMap: map[rune]string{
+	KeyToActionMap: map[rune]string{
 		'w': "up",
 		'a': "left",
 		's': "down",

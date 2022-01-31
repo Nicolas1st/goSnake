@@ -15,7 +15,7 @@ type Config struct {
 	Snake *SnakeConfig `toml:"snake"`
 	Food  *FoodConfig  `toml:"food"`
 
-	KeyMap map[rune]string
+	KeyToActionMap map[rune]string
 }
 
 // NewConfig - parses the user-provided config file
@@ -48,8 +48,8 @@ func NewConfig(filePath string) *Config {
 	}
 
 	// contstructing final config
-	keyMap := keyboardKeys.toMap()
-	config.KeyMap = keyMap
+	keyToActionMap := keyboardKeys.toMap()
+	config.KeyToActionMap = keyToActionMap
 
 	return config
 
