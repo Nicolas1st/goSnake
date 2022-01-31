@@ -1,16 +1,16 @@
 package config
 
 type Keyboard struct {
-	Up    rune
-	Left  rune
-	Down  rune
-	Right rune
+	Up    string
+	Left  string
+	Down  string
+	Right string
 
-	Quit rune
+	Quit string
 }
 
-func (keys *Keyboard) toSwappedKeysAndValuesMap() map[rune]string {
-	return map[rune]string{
+func (keys *Keyboard) toSwappedKeysAndValuesMap() map[string]string {
+	return map[string]string{
 		keys.Up:    "up",
 		keys.Down:  "down",
 		keys.Left:  "left",

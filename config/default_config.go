@@ -32,20 +32,20 @@ var defaultConfig Config = Config{
 	},
 
 	ActionToKeyMap: &Keyboard{
-		Up:    'w',
-		Left:  'a',
-		Down:  's',
-		Right: 'd',
+		Up:    "w",
+		Left:  "a",
+		Down:  "s",
+		Right: "d",
 
-		Quit: 'q',
+		Quit: "q",
 	},
 
-	KeyToActionMap: map[rune]string{
-		'w': "up",
-		'a': "left",
-		's': "down",
-		'd': "right",
+	KeyToActionMap: map[string]string{
+		"w": "up",
+		"a": "left",
+		"s": "down",
+		"d": "right",
 
-		'q': "quit",
+		"q": "quit",
 	},
 }

@@ -16,7 +16,7 @@ type Config struct {
 	Food  *FoodConfig  `toml:"food"`
 
 	ActionToKeyMap *Keyboard `toml:"keyboard"`
-	KeyToActionMap map[rune]string
+	KeyToActionMap map[string]string
 }
 
 // NewConfig - parses the user-provided config file
@@ -35,7 +35,7 @@ func NewConfig(filePath string) *Config {
 	_, err = toml.Decode(string(b), config)
 
 	if err != nil {
-		log.Fatal("Could not parse the config file")
+		log.Fatal("Could not parse the config file", err)
 		return &defaultConfig
 	}
 
