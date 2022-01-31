@@ -60,7 +60,7 @@ func main() {
 	defer tty.Close()
 
 	// running a go routine to get user input
-	userInputChannel := make(chan rune)
+	userInputChannel := make(chan string)
 	go routines.CaptureUserInput(tty, userInputChannel)
 
 	// making sure the tty is realeased even if forceful quit occurs
