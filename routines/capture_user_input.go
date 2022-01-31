@@ -6,7 +6,7 @@ import (
 	"github.com/mattn/go-tty"
 )
 
-func CaptureUserInput(tty *tty.TTY, userInputChannel chan rune) {
+func CaptureUserInput(tty *tty.TTY, userInputChannel chan string) {
 	for {
 		pressedKey, err := tty.ReadRune()
 
@@ -14,6 +14,6 @@ func CaptureUserInput(tty *tty.TTY, userInputChannel chan rune) {
 			log.Fatal(err)
 		}
 
-		userInputChannel <- pressedKey
+		userInputChannel <- string(pressedKey)
 	}
 }
