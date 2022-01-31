@@ -30,4 +30,13 @@ var defaultConfig Config = Config{
 		X: 15,
 		Y: 15,
 	},
+
+	KeyMap: map[rune]string{
+		'w': "up",
+		'a': "left",
+		's': "down",
+		'd': "right",
+
+		'q': "quit",
+	},
 }
