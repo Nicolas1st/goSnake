@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"os/signal"
 	"time"
 
 	"github.com/Nicolas1st/goSnake/color"
 	"github.com/Nicolas1st/goSnake/config"
 	"github.com/Nicolas1st/goSnake/objects"
+	"github.com/Nicolas1st/goSnake/routines"
 	"github.com/mattn/go-tty"
 )
 
@@ -51,43 +51,21 @@ func main() {
 	)
 
 	// opening a tty to read input from
-	t, err := tty.Open()
+	tty, err := tty.Open()
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	defer t.Close()
+	defer tty.Close()
 
 	// running a go routine to get user input
-	inputChannel := make(chan rune)
-	var pressedKey rune
-	go func(tty *tty.TTY, inputChannel chan rune) {
-
-		for {
-
-			pressedKey, err := tty.ReadRune()
-
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			inputChannel <- pressedKey
-
-		}
-
-	}(t, inputChannel)
+	userInputChannel := make(chan rune)
+	go routines.CaptureUserInput(tty, userInputChannel)
 
 	// making sure the tty is realeased even if forceful quit occurs
-	go func(inputChannel chan rune) {
-
-		signalChannel := make(chan os.Signal, 1)
-		signal.Notify(signalChannel, os.Interrupt)
-
-		<-signalChannel
-		inputChannel <- 'q'
-
-	}(inputChannel)
+	systemCallChannel := make(chan bool, 1)
+	go routines.CaptureSystemTerminationCall(systemCallChannel)
 
 	// game loop
 	for {
@@ -97,11 +75,17 @@ func main() {
 
 		// getting user input if it there was any
 		select {
-		case pressedKey = <-inputChannel:
-			if pressedKey == 'q' {
+		case pressedKey := <-userInputChannel:
+			if pressedKey == config.ActionToKeyMap.Quit {
 				return
 			}
-			snake.SetDirection(pressedKey)
+
+			if direction, ok := config.KeyToActionMap[pressedKey]; ok {
+				snake.SetDirection(direction)
+			}
+
+		case <-systemCallChannel:
+			return
 		default:
 		}
 
