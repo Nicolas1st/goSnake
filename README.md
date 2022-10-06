@@ -1,7 +1,5 @@
 # Snake Game In Go
 
-## My First Ever Go Project
-
 <img src="./goSnakeGameplay.gif" alt="gif with gameplay" width="500" height="500" />
 
 
